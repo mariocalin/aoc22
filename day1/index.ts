@@ -6,12 +6,13 @@ const content = readFileSync(join(__dirname, inputFileName), 'utf-8');
 
 const isEmptyLine = (value: string) => value == "";
 
-let maxCalories = 0;
+const elves: number[] = [];
+
 let caloriesAcum = 0;
 
 content.split(/\r?\n/).forEach(line => {
     if (isEmptyLine(line)) {
-        if (caloriesAcum > maxCalories) maxCalories = caloriesAcum;
+        elves.push(caloriesAcum);
         caloriesAcum = 0;
     } else {
         const calories = Number.parseInt(line);
@@ -19,4 +20,9 @@ content.split(/\r?\n/).forEach(line => {
     }
 });
 
-console.log(`Max calories found is: ${maxCalories}`)
+elves.sort((a, b) => (a > b ? -1 : 1));
+
+console.log(`PART one: ${elves[0]}`)
+
+const topThree = elves[0] + elves[1] + elves[2];
+console.log(`PART two: ${topThree}`);
